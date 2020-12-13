@@ -5,7 +5,8 @@ pipeline {
 		stage("installations"){
 			steps{
 				node('ansible-node') {
-    					sh 'cd /home/centos/ && ansible-playbook -i hosts.ini installations-playbook.yml -v'
+					sh 'cd /home/centos/ &&  git clone https://github.com/sayerameshbabu/project.git '
+    					sh 'cd /home/centos/ && ansible-playbook -i hosts.ini ./project/installations-playbook.yml -v'
 				}
 			}
 		}
