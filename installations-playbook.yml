@@ -2,7 +2,6 @@
 - name: installations for java devops environment
   hosts: 
   become: yes
-  vars
   tasks:
     - name: basic installations - vim, wget, unzip, git, java-1.8*
       yum:
