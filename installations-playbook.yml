@@ -1,2 +1,70 @@
 ---
+- name: installations for java devops environment
+  hosts: 
+  become: yes
+  vars
+  tasks:
+    - name: basic installations - vim, wget, unzip, git, java-1.8*
+      yum:
+        name:
+          - vim
+          - wget
+          - unzip
+          - git
+          - java-1.8*
+        state: installed
+    - name: build tool - maven install
+      yum:
+        name: maven
+        state: installed
+    - name: testing tool - downloading sonar qube
+      get_url:
+        url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-6.7.7.zip
+        dest: /home/centos/
+      become: no
+    - name: unzipping sonar qube
+      unarchive:
+        src: /home/centos/sonarqube-6.7.7.zip
+        dest: /home/centos/
+        remote_src: yes
+      become: no
+    - name: starting up the sonarqube - 9000 port
+      shell: "./home/centos/sonarqube-6.7.7/bin/linux-x86-64/sonar.sh start"
+      become: no
+    - name: prompts
+      vars_prompts:
+        - name: "sonar_url"
+          prompt: " please enter the sonarqube ip address "
+          private: no
+        - name: "sonar_command"
+          prompt: "login with admin & admin as credentials and generate mvn command and paste it below"
+          private: no
+    - name: downloading nexus
+      get_url:
+        url: https://download.sonatype.com/nexus/oss/nexus-2.14.18-01-bundle.tar.gz
+        dest: /home/centos/
+      become: no
+    - name: unzipping nexus
+      unarchive:
+        src: /home/centos/nexus-2.14.18-01-bundle.tar.gz
+        dest: /home/centos/
+        remote_src: yes
+      become: no
+    - name: starting up the nexus - 8081/nexus
+      shell: "./home/centos/nexus-2.14.16-01/bin/nexus start"
+      become: no
+    - name: downloading tomcat
+      get_url:
+        url: https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.94/bin/apache-tomcat-7.0.94.tar.gz
+        dest: /home/centos
+      become: no
+    - name: unarchive tomcat
+      unarchive:
+        src: /home/centos/apache-tomcat-7.0.94.tar.gz
+        dest: /home/centos/
+        remote_src: yes
+      become: no
+    - name: starting tomcat - 8080
+      shell: "./home/centos/apache-tomcat-7.0.94/bin/startup.sh"
+      become: no
 ...
