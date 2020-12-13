@@ -5,7 +5,7 @@ pipeline {
 		stage("installations"){
 			steps{
 				node('ansible-node') {
-    					sh 'ansible-playbook -i hosts.ini installations-playbook.yml -v'
+    					sh 'cd /home/centos/ && ansible-playbook -i hosts.ini installations-playbook.yml -v'
 				}
 			}
 		}
@@ -29,7 +29,7 @@ pipeline {
 		stage("release"){
 			steps{
 				node('build-node'){
-					sh 'cd project && mvn deploy'
+					sh 'cd /home/centos/project && mvn deploy'
 				}
 			}
 		}
