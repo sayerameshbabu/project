@@ -21,10 +21,13 @@
     <version>2.5</version>
 </dependency>
 </dependencies>
-<distributionManagement>
+
+  
+  <distributionManagement>
   <repository>
     <id>releases</id>
-        <url>http://34.238.162.187:8081/nexus/content/repositories/releases</url>
+    <url>http://184.72.90.168:8081/nexus/content/repositories/releases</url>
   </repository>
 </distributionManagement>
+  
 </project>
