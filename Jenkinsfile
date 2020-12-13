@@ -9,7 +9,7 @@ pipeline {
 		}
 		stage("performance test"){
 			steps{
-				sh 'mvn  sonar:sonar    -Dsonar.host.url=http://http://52.90.141.244:9000    -Dsonar.login=eb1030f73a9954a75c5f07cef1dc46866e817764'
+				sh 'mvn  sonar:sonar    -Dsonar.host.url=http://52.90.141.244:9000    -Dsonar.login=eb1030f73a9954a75c5f07cef1dc46866e817764'
 			}
 		}
 		stage("build"){
