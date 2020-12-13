@@ -42,7 +42,7 @@
   tasks:
     - name: downloading nexus
       get_url:
-url: https://download.sonatype.com/nexus/oss/nexus-2.14.18-01-bundle.tar.gz
+        url: https://download.sonatype.com/nexus/oss/nexus-2.14.18-01-bundle.tar.gz
         dest: /home/centos/
       become: no
     - name: unzipping nexus
