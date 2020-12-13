@@ -2,20 +2,28 @@ pipeline {
     agent any
 
 	stages{
-		stage("unit test"){
+		stage("installations"){
 			steps{
-				sh 'mvn test'
+				node('ansible-node') {
+    					sh 'ansible-playbook -i hosts.ini installations-playbook.yml -v'
+				}
 			}
 		}
 		stage("performance test"){
 			steps{
 				//sh 'mvn  sonar:sonar    -Dsonar.host.url=http://52.90.141.244:9000    -Dsonar.login=eb1030f73a9954a75c5f07cef1dc46866e817764'
-				echo "testing"
+				node('build-node') {
+					sh 'git clone '
+    					sh 'mvn test'
+					sh 'mvn sonar:sonar  -Dsonar.host.url=http://107.21.199.197:9000 -Dsonar.login=10ed36917b9f03140367a856dbfa564dedf29370'
+				}
 			}
 		}
 		stage("build"){
 			steps{
-				sh 'mvn clean package'
+				node('build-node'){
+					sh 'mvn clean package'
+				}
 			}
 		}
 		stage("release"){
