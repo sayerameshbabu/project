@@ -1,6 +1,6 @@
 ---
 - name: installations for java devops environment
-  hosts: 
+  hosts: server
   become: yes
   tasks:
     - name: basic installations - vim, wget, unzip, git, java-1.8*
@@ -28,19 +28,21 @@
         remote_src: yes
       become: no
     - name: starting up the sonarqube - 9000 port
-      shell: "./home/centos/sonarqube-6.7.7/bin/linux-x86-64/sonar.sh start"
+      shell: "/home/centos/sonarqube-6.7.7/bin/linux-x86-64/sonar.sh start || /home/centos/sonarqube-6.7.7/bin/linux-x86-64/sonar.sh status"
       become: no
-    - name: prompts
-      vars_prompt:
-        - name: "sonar_url"
-          prompt: " please enter the sonarqube ip address "
-          private: no
-        - name: "sonar_command"
-          prompt: "login with admin & admin as credentials and generate mvn command and paste it below"
-          private: no
+- name: continuation.
+  hosts: server
+  vars_prompt:
+      - name: "sonar_url"
+        prompt: " please enter the sonarqube ip address "
+        private: no
+      - name: "sonar_command"
+        prompt: "login with admin & admin as credentials and generate mvn command and paste it below"
+        private: no
+  tasks:
     - name: downloading nexus
       get_url:
-        url: https://download.sonatype.com/nexus/oss/nexus-2.14.18-01-bundle.tar.gz
+url: https://download.sonatype.com/nexus/oss/nexus-2.14.18-01-bundle.tar.gz
         dest: /home/centos/
       become: no
     - name: unzipping nexus
@@ -50,7 +52,7 @@
         remote_src: yes
       become: no
     - name: starting up the nexus - 8081/nexus
-      shell: "./home/centos/nexus-2.14.16-01/bin/nexus start"
+      shell: "/home/centos/nexus-2.14.18-01/bin/nexus start || /home/centos/nexus-2.14.18-01/bin/nexus status "
       become: no
     - name: downloading tomcat
       get_url:
@@ -64,6 +66,6 @@
         remote_src: yes
       become: no
     - name: starting tomcat - 8080
-      shell: "./home/centos/apache-tomcat-7.0.94/bin/startup.sh"
+      shell: "/home/centos/apache-tomcat-7.0.94/bin/startup.sh"
       become: no
 ...
