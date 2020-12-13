@@ -25,7 +25,7 @@ pipeline {
 		}
 		stage("deploy"){
 			steps{
-				deploy adapters: [tomcat7(credentialsId: 'tomcat-gui', path: '', url: 'http://52.90.141.244:7777/')], contextPath: 'calulator2', onFailure: false, war: '**/*.war'
+				deploy adapters: [tomcat7(credentialsId: 'tomcat-admin', path: '', url: 'http://52.90.141.244:7777/')], contextPath: 'calc', war: '**/*.war'
 			}
 		}
 	}
