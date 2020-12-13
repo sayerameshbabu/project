@@ -31,7 +31,7 @@
       shell: "./home/centos/sonarqube-6.7.7/bin/linux-x86-64/sonar.sh start"
       become: no
     - name: prompts
-      vars_prompts:
+      vars_prompt:
         - name: "sonar_url"
           prompt: " please enter the sonarqube ip address "
           private: no
