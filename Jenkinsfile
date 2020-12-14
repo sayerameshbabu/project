@@ -18,7 +18,7 @@ pipeline {
 					sh 'rm -rf /home/centos/project'
 					 sh '(cd /home/centos/ && git clone https://github.com/sayerameshbabu/project.git ) || (cd /home/centos/project && git pull --all )'
     					sh 'cd /home/centos/project/ && mvn test'
-					sh 'cd /home/centos/project/ && mvn sonar:sonar  -Dsonar.host.url=http://107.21.199.197:9000 -Dsonar.login=10ed36917b9f03140367a856dbfa564dedf29370'
+					sh 'cd /home/centos/project/ && mvn sonar:sonar  -Dsonar.host.url=http://52.90.99.27:9000 -Dsonar.login=10ed36917b9f03140367a856dbfa564dedf29370'
 				}
 			}
 		}
