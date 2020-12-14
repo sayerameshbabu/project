@@ -3,14 +3,32 @@
   hosts: kops-workstation
   tasks:
     - name: installing kubectl
-      
+      shell:
+        - 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
+        - 'chmod +x ./kubectl'
+        - 'sudo mv ./kubectl /usr/local/bin/kubectl'
     - name: installing kops
       shell: 
         - 'curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64'
         - 'chmod +x kops-linux-amd64'
         - 'sudo mv kops-linux-amd64 /usr/local/bin/kops'
-        - 
-
-        
-
-...
+    - name: installing aws-cli
+      shell:
+        - ' sudo yum install python -y'
+        - ' curl -O https://bootstrap.pypa.io/get-pip.py '
+        - 'python get-pip.py'
+        - 'sudo yum install awscli -y  || pip install awscli '
+    - name: echoing..
+      shell: 
+        - 'echo "Create an IAM user/role with Route53, EC2, IAM and S3 full access & Attach IAM role to ubuntu instance "'
+        - 'aws configure'
+    - name: creating s3 bucket
+      shell:
+        - 'aws s3 mb s3://k8-ramesh-cluster-state-2020'
+    - name: creating cluster state
+      shell:
+        - 'echo | ssh-keygen -P '' '
+        - 'export KOPS_STATE_STORE=s3://k8-ramesh-cluster-state-2020'
+        - 'kops create cluster --name=test.k8s.local --state=s3://k8-ramesh-cluster-state-2020 --zones=us-east-1a, us-east-1b --node-size=t2.micro --master-size=t2.micro --yes'
+         
+ ...
