@@ -3,7 +3,7 @@
   hosts: kops-workstation
   tasks:
     - name: installing kubectl
-      shell: | 
+      shell: |
         curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
         chmod +x ./kubectl
         sudo mv ./kubectl /usr/local/bin/kubectl
@@ -26,10 +26,11 @@
         aws s3 mb s3://k8-ramesh-cluster-state-2020
       ignore_errors: yes
     - name: creating cluster state - 1
-      shell: echo | ssh-keygen -P '' 
+      shell: echo | ssh-keygen -P ''
+      ignore_errors: yes
     - name: creating cluster state - 2
       shell: export KOPS_STATE_STORE=s3://k8-ramesh-cluster-state-2020
     - name: creating cluster state - 3
-      shell: kops create cluster --name=test.k8s.local --state=s3://k8-ramesh-cluster-state-2020 --zones=us-east-1a, us-east-1b --node-size=t2.micro --master-size=t2.micro --yes
-         
+      shell: |
+        (kops validate cluster --state=s3://k8-ramesh-cluster-state-2020)  || (kops create cluster --cloud=aws --zones=us-east-1a,us-east-1b --name=test.k8s.local --state=s3://k8-ramesh-cluster-state-2020  --dns-zone=valaxy.nt --dns private  --node-size=t2.micro --master-size=t2.micro --yes )
 ...
