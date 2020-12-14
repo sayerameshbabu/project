@@ -21,7 +21,6 @@
     - name: echoing..
       shell: |
         echo "Create an IAM user/role with Route53, EC2, IAM and S3 full access & Attach IAM role to ubuntu instance "
-        aws configure
     - name: creating s3 bucket
       shell: |
         aws s3 mb s3://k8-ramesh-cluster-state-2020
