@@ -5,6 +5,9 @@ pipeline {
 		stage("docker build1"){
 			steps{
 				node('build-node'){
+					sh 'rm -rf /home/centos/project'
+					sh '(cd /home/centos/ && git clone https://github.com/sayerameshbabu/project.git ) || (cd /home/centos/project && git pull --all )'
+    					sh 'cd /home/centos/project/ && mvn clean package'
 					sh '(docker stop calculatorContainer && docker rm calculatorContainer) || echo "container is nor running" '
 					sh 'cd /home/centos/project && docker build -t sayerameshbabu/javacalc .'
 					sh 'docker run --name calculatorContainer -dt -p 8082:8080 sayerameshbabu/javacalc '
@@ -34,7 +37,7 @@ pipeline {
 				//sh 'mvn  sonar:sonar    -Dsonar.host.url=http://52.90.141.244:9000    -Dsonar.login=eb1030f73a9954a75c5f07cef1dc46866e817764'
 				node('build-node') {
 					sh 'rm -rf /home/centos/project'
-					 sh '(cd /home/centos/ && git clone https://github.com/sayerameshbabu/project.git ) || (cd /home/centos/project && git pull --all )'
+					sh '(cd /home/centos/ && git clone https://github.com/sayerameshbabu/project.git ) || (cd /home/centos/project && git pull --all )'
     					sh 'cd /home/centos/project/ && mvn test'
 					sh 'cd /home/centos/project/ && mvn sonar:sonar  -Dsonar.host.url=http://18.234.252.244:9000 -Dsonar.login=10ed36917b9f03140367a856dbfa564dedf29370'
 				}
