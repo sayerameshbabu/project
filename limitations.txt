@@ -1,0 +1,2 @@
+1. update public ip address in jenkinsfile - for sonarqube
+2. update public ip address in pom file - for nexus
