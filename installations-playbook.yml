@@ -81,6 +81,7 @@
         name: docker
         state: started
         enabled: yes
+      become: yes
     - name: addign docker group
       shell: |
         sudo groupadd docker || echo " group - docker already added "
