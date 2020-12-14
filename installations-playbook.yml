@@ -68,4 +68,20 @@
     - name: starting tomcat - 8080
       shell: "/home/centos/apache-tomcat-7.0.94/bin/startup.sh"
       become: no
+- name: installing docker 
+  hosts: server
+  tasks:
+    - name: installing docker
+      yum:
+        name: docker
+        state: installed
+      become: yes
+    - name: enabling
+      service:
+        name: docker
+        enabled: yes
+    - name: addign docker group
+      shell: |
+        sudo groupadd docker || echo " group - docker already added "
+        sudo usermod -aG docker $(whoami)
 ...
