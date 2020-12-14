@@ -24,10 +24,12 @@
     - name: creating s3 bucket
       shell: |
         aws s3 mb s3://k8-ramesh-cluster-state-2020
-    - name: creating cluster state
-      shell: |
-        echo | ssh-keygen -P '' 
-        export KOPS_STATE_STORE=s3://k8-ramesh-cluster-state-2020
-        kops create cluster --name=test.k8s.local --state=s3://k8-ramesh-cluster-state-2020 --zones=us-east-1a, us-east-1b --node-size=t2.micro --master-size=t2.micro --yes
+      ignore_errors: yes
+    - name: creating cluster state - 1
+      shell: echo | ssh-keygen -P '' 
+    - name: creating cluster state - 2
+      shell: export KOPS_STATE_STORE=s3://k8-ramesh-cluster-state-2020
+    - name: creating cluster state - 3
+      shell: kops create cluster --name=test.k8s.local --state=s3://k8-ramesh-cluster-state-2020 --zones=us-east-1a, us-east-1b --node-size=t2.micro --master-size=t2.micro --yes
          
 ...
