@@ -79,6 +79,7 @@
     - name: enabling
       service:
         name: docker
+        state: started
         enabled: yes
     - name: addign docker group
       shell: |
