@@ -2,12 +2,20 @@ pipeline {
     agent any
 
 	stages{
+		
 		stage("installations"){
 			steps{
 				node('ansible-node') {
 					sh 'sudo yum install git -y'
 					sh '(cd /home/centos/ &&  git clone https://github.com/sayerameshbabu/project.git) || (cd /home/centos/project &&  git pull --all)'
-    					sh 'cd /home/centos/ && ansible-playbook -i hosts.ini ./project/installations-playbook.yml -v'
+    					sh 'cd /home/centos/ && ansible-playbook -i ./project/hosts.ini ./project/installations-playbook.yml -v'
+				}
+			}
+		}
+		stage("kubernetes-setup"){
+			steps{
+				node('ansible-node'){
+					sh 'cd /home/centos/ && ansible-playbook -i ./project/hosts.ini ./project/kuberenetes-kops-setup-playbook.yml -v'	
 				}
 			}
 		}
