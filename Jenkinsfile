@@ -5,6 +5,7 @@ pipeline {
 		stage("installations"){
 			steps{
 				node('ansible-node') {
+					sh 'sudo yum install git -y'
 					sh 'cd /home/centos/ &&  git clone https://github.com/sayerameshbabu/project.git '
     					sh 'cd /home/centos/ && ansible-playbook -i hosts.ini ./project/installations-playbook.yml -v'
 				}
