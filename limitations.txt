@@ -1,7 +1,7 @@
-1. update public ip address in jenkinsfile - for sonarqube
-2. update public ip address in pom file - for nexus
-3. unable to start tomcat server
-4. we have to pass centos.pem to ansible server or we have to place it in github
-5. have to manually install ec2(kops workstation) and attach roles to it.
-7. unable to export KOPS_STATE_STORE
-8. unable to use docker container to launch war file
+1. update public ip address in jenkinsfile - for sonarqube - use elastic ip address
+2. update public ip address in pom file - for nexus - use elastic ip address
+3. unable to start tomcat server - no hop or systemd script
+4. we have to pass centos.pem to ansible server or we have to place it in github - use username and password instead of centos user
+5. have to manually install ec2(kops workstation) and attach roles to it. - use iam module
+7. unable to export KOPS_STATE_STORE - use environment module
+8. unable to use docker container to launch war file - will work - try launching by - ip:8080/WebAppCal-11.0/
