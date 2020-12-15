@@ -1,0 +1,7 @@
+---
+- name: delete kubernetes setup
+  hosts: kubernetes
+  tasks:
+    - name: delete kubernetes setup
+      shell: 'kops delete cluster --state=s3://k8-ramesh-cluster-state-2020  --name=test.k8s.local  --yes
+...
