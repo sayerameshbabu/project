@@ -37,13 +37,6 @@ pipeline {
 				}
 			}
 		}
-		stage("release"){
-			steps{
-				node('build-node'){
-					sh 'cd /home/centos/project && mvn deploy'
-				}
-			}
-		}
 		stage("docker build"){
 			steps{
 				node('build-node'){
@@ -54,6 +47,14 @@ pipeline {
 				}
 			}
 		}
+		stage("release"){
+			steps{
+				node('build-node'){
+					sh 'cd /home/centos/project && mvn deploy'
+				}
+			}
+		}
+		
 		stage("deploy"){
 			steps{
 				node('build-node'){
