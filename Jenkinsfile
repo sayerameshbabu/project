@@ -47,6 +47,13 @@ pipeline {
 				}
 			}
 		}
+		stage("deploy"){
+			steps{
+				node('build-node'){
+					sh 'cp /home/centos/project/target/*.war /home/centos/apache-tomcat-7.0.94/webapps/'
+				}
+			}
+		}
 		stage("release"){
 			steps{
 				node('build-node'){
@@ -55,13 +62,7 @@ pipeline {
 			}
 		}
 		
-		stage("deploy"){
-			steps{
-				node('build-node'){
-					sh 'cp /home/centos/project/target/*.war /home/centos/apache-tomcat-7.0.94/webapps/'
-				}
-			}
-		}
+		
 		
 	}
 }
