@@ -4,3 +4,4 @@
 4. we have to pass centos.pem to ansible server or we have to place it in github
 5. have to manually install ec2(kops workstation) and attach roles to it.
 7. unable to export KOPS_STATE_STORE
+8. unable to use docker container to launch war file
