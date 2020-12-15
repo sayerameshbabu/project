@@ -2,19 +2,6 @@ pipeline {
     agent any
 
 	stages{
-		stage("docker build1"){
-			steps{
-				node('build-node'){
-					sh 'rm -rf /home/centos/project'
-					sh '(cd /home/centos/ && git clone https://github.com/sayerameshbabu/project.git ) || (cd /home/centos/project && git pull --all )'
-    					sh 'cd /home/centos/project/ && mvn clean package'
-					sh '(docker stop calculatorContainer && docker rm calculatorContainer) || echo "container is nor running" '
-					sh 'cd /home/centos/project && docker build -t sayerameshbabu/javacalc .'
-					sh 'docker run --name calculatorContainer -dt -p 8082:8080 sayerameshbabu/javacalc '
-					sh 'echo "docker container running on port 8082" '
-				}
-			}
-		}
 		
 		stage("installations"){
 			steps{
@@ -64,7 +51,7 @@ pipeline {
 				}
 			}
 		}
-		stage("docker build2"){
+		stage("docker build"){
 			steps{
 				node('build-node'){
 					sh '(docker stop calculatorContainer && docker rm calculatorContainer) || echo "container is nor running" '
