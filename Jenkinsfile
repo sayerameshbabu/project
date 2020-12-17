@@ -12,13 +12,7 @@ pipeline {
 				}
 			}
 		}
-		stage("kubernetes-setup"){
-			steps{
-				node('ansible-node'){
-					sh 'cd /home/centos/ && ansible-playbook -i ./project/hosts.ini ./project/kuberenetes-kops-setup-playbook.yml -v'	
-				}
-			}
-		}
+		
 		stage("performance test"){
 			steps{
 				//sh 'mvn  sonar:sonar    -Dsonar.host.url=http://52.90.141.244:9000    -Dsonar.login=eb1030f73a9954a75c5f07cef1dc46866e817764'
@@ -47,6 +41,13 @@ pipeline {
 				}
 			}
 		}
+		stage("docker-push"){
+			steps{
+				node('build-node'){
+					sh 'docker push sayerameshbabu/javacalc'
+				}
+			}
+		}
 		stage("deploy"){
 			steps{
 				node('build-node'){
@@ -54,10 +55,19 @@ pipeline {
 				}
 			}
 		}
+		
 		stage("release"){
 			steps{
 				node('build-node'){
 					sh 'cd /home/centos/project && mvn deploy'
+				}
+			}
+		}
+		
+		stage("kubernetes-setup"){
+			steps{
+				node('ansible-node'){
+					sh 'cd /home/centos/ && ansible-playbook -i ./project/hosts.ini ./project/kuberenetes-kops-setup-playbook.yml -v'	
 				}
 			}
 		}
