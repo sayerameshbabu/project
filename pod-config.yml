@@ -12,9 +12,9 @@ spec:
       name: pod-javacalc
       labels:
         component: web
-      spec:
-        containers:
-          - name: container-javacalc
-            image: sayerameshbabu/javacalc
-            ports:
-              - containerPort: 8080
+    spec:
+      containers:
+        - name: container-javacalc
+          image: sayerameshbabu/javacalc
+          ports:
+            - containerPort: 8080
