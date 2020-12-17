@@ -5,4 +5,10 @@ metadata:
   label:
     component: web
 spec:
+  containers:
+    - image: sayerameshbabu/javacalc
+      name: pod1nginxcontainer
+      ports:
+        - containerPort: 8080
+      
   
